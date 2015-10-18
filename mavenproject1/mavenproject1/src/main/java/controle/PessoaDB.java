@@ -17,7 +17,7 @@ import modelo.Estado;
  *
  * @author aluno
  */
-public class EstadoDB {
+public class PessoaDB {
     public static ArrayList getListaEstados(Connection conexao){
         ArrayList lista = new ArrayList();
         try{
