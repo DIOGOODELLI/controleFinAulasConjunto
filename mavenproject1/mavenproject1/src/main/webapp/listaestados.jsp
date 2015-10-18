@@ -20,11 +20,11 @@
         <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script type="text/javascript" src="js/materialize.min.js"></script>
         
-        <ul id="dropdown1" class="grey lighten-1 dropdown-content">
+       <ul id="dropdown1" class="grey lighten-1 dropdown-content">
             <li><a href="listaestados.jsp">Estados</a></li>
             <li><a href="listacidades.jsp">Cidade</a></li>
-            <li><a href="listacidades.jsp">Pessoas</a></li>
-            <li><a href="listacidades.jsp">Contas</a></li>
+            <li><a href="listapessoa.jsp">Pessoas</a></li>
+            <li><a href="listacontas.jsp">Contas</a></li>
             <li class="divider"></li>
             <li><a href="index.html">Voltar</a></li>
         </ul>

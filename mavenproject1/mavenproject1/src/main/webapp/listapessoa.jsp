@@ -23,8 +23,8 @@
         <ul id="dropdown1" class="grey lighten-1 dropdown-content">
             <li><a href="listaestados.jsp">Estados</a></li>
             <li><a href="listacidades.jsp">Cidade</a></li>
-            <li><a href="listacidades.jsp">Pessoas</a></li>
-            <li><a href="listacidades.jsp">Contas</a></li>
+            <li><a href="listapessoa.jsp">Pessoas</a></li>
+            <li><a href="listacontas.jsp">Contas</a></li>
             <li class="divider"></li>
             <li><a href="index.html">Voltar</a></li>
         </ul>
