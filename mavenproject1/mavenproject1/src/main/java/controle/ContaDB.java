@@ -11,23 +11,31 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import modelo.Estado;
+import java.util.Date;
+import modelo.Conta;
 
 /**
  *
  * @author aluno
  */
 public class ContaDB {
-    public static ArrayList getListaEstados(Connection conexao){
+    public static ArrayList getListaContas(Connection conexao){
         ArrayList lista = new ArrayList();
         try{
             Statement st = conexao.createStatement();
-            ResultSet rs = st.executeQuery("select * from estado");
+            ResultSet rs = st.executeQuery("select * from conta");
             while(rs.next()){
-                String auxSigla = rs.getString("est_sigla");
-                String auxNome = rs.getString("nome");
-                Estado estado = new Estado(auxSigla, auxNome);
-                lista.add(estado);
+                int auxConta = rs.getInt("cnt_numero");
+                String auxdescricao = rs.getString("descricao");
+                String auxDate = rs.getString("data");
+                Double auxvalor = rs.getDouble("valor");
+                String auxTipo = rs.getString("tipo");
+                String auxSituacao = rs.getString("situacao");
+                int auxNome = rs.getInt("pes_codigo");
+                
+                
+                Conta conta = new Conta(auxConta, auxdescricao,auxDate,auxvalor,auxTipo,auxSituacao,auxNome);
+                lista.add(conta);
             }
         }
         catch(SQLException e){
@@ -38,12 +46,17 @@ public class ContaDB {
         }
     }
     
-    public static boolean incluiEstado(Estado estado, Connection conexao){
+    public static boolean incluiConta(Conta conta, Connection conexao){
         boolean incluiu = false;
         try{
-            PreparedStatement ps = conexao.prepareStatement("insert into estado (est_sigla, nome) values (?,?)");
-            ps.setString(2, estado.getNome());
-            ps.setString(1, estado.getEst_sigla()); 
+            PreparedStatement ps = conexao.prepareStatement("insert into conta (cnt_numero, descricao, data, valor, tipo, situacao,pes_codigo) values (?,?,?,?,?,?,?)");
+            ps.setInt(7, conta.getPes_codigo());
+            ps.setString(6, conta.getSituacao());
+            ps.setString(5, conta.getTipo());
+            ps.setDouble(4, conta.getValor());
+            ps.setString(3, conta.getData());
+            ps.setString(2, conta.getDescricao());
+            ps.setInt(1, conta.getCnt_numero()); 
             int valor  = ps.executeUpdate();
             if(valor == 1){
                 incluiu = true;
@@ -57,12 +70,17 @@ public class ContaDB {
         }
     }
     
-    public static boolean alteraEstado(Estado estado, Connection conexao){
+    public static boolean alteraConta(Conta conta, Connection conexao){
         boolean alterou = false;
         try{
-            PreparedStatement ps = conexao.prepareStatement("update estado set nome = ? where est_sigla = ?");
-            ps.setString(1, estado.getNome());
-            ps.setString(2, estado.getEst_sigla());
+            PreparedStatement ps = conexao.prepareStatement("update conta set descricao = ? and data = ? and valor = ? and tipo = ? and situacao = ? and pes_codigo = ? where cnt_numero = ?");
+            ps.setString(1, conta.getDescricao());
+            ps.setString(2, conta.getData());
+            ps.setDouble(3, conta.getValor());
+            ps.setString(4, conta.getTipo());
+            ps.setString(5, conta.getSituacao());
+            ps.setInt(6, conta.getPes_codigo());
+            
             int valor = ps.executeUpdate();
             if(valor == 1){
                 alterou = true;
@@ -76,10 +94,10 @@ public class ContaDB {
         }
     }
     
-    public static boolean excluiEstado(String sigla, Connection conexao){
+    public static boolean excluiConta(String sigla, Connection conexao){
         boolean excluiu = false;
         try{
-            PreparedStatement ps = conexao.prepareStatement("delete from estado where est_sigla = ?");
+            PreparedStatement ps = conexao.prepareStatement("delete from conta where cnt_numero = ?");
             ps.setString(1, sigla);
             int valor = ps.executeUpdate();
             if(valor == 1){
@@ -94,21 +112,27 @@ public class ContaDB {
         }
     }
     
-        public static Estado getEstado(String sigla, Connection conexao){
-        Estado estado = null;
+        public static Conta getConta(String sigla, Connection conexao){
+        Conta conta = null;
         try{
-            PreparedStatement ps = conexao.prepareStatement("select * from estado where est_sigla = ?");
+            PreparedStatement ps = conexao.prepareStatement("select * from conta where cnt_numero = ?");
             ps.setString(1, sigla);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
-                String auxSigla = rs.getString("est_sigla");
-                String auxNome = rs.getString("nome");
-                estado = new Estado(auxSigla, auxNome);
+                int auxConta = rs.getInt("cnt_numero");
+                String auxdescricao = rs.getString("descricao");
+                String auxDate = rs.getString("data");
+                Double auxvalor = rs.getDouble("valor");
+                String auxTipo = rs.getString("tipo");
+                String auxSituacao = rs.getString("situacao");
+                int auxNome = rs.getInt("pes_codigo");
+                
+                conta = new Conta(auxConta, auxdescricao, auxDate, auxvalor, auxTipo, auxSituacao, auxNome );
             }
         }catch(SQLException e){
             System.out.println("Erro de sql: " + e.getMessage());
         }finally{
-            return estado;
+            return conta;
         }
     }
     
