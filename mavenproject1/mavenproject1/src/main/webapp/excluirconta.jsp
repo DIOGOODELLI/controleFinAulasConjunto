@@ -1,3 +1,5 @@
+<%@page import="controle.ContaDB"%>
+<%@page import="modelo.Conta"%>
 <%@page import="controle.CidadeDB"%>
 <%@page import="modelo.Cidade"%>
 <%@page import="controle.Conexao"%>
@@ -32,19 +34,19 @@
                 </ul>
             </div>
         </nav>
-        <a href="listacidades.jsp" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">replay</i></a> 
+        <a href="listacontas.jsp" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">replay</i></a> 
         <%
             String mensagem = "";
             Connection conexao = Conexao.getConexao();
-            Cidade cidade = null;
+            Conta conta = null;
             if(request.getParameter("btnexclui") !=null){
              int codigo = Integer.valueOf(request.getParameter("codigo"));             
-             boolean excluiu = CidadeDB.excluiCidade(codigo, conexao);
+             boolean excluiu = ContaDB.excluiConta(codigo, conexao);
              if(excluiu){
-                 mensagem = "Cidade excluida com sucelsso!";
+                 mensagem = "Conta paga com sucelsso!";
              }else{
                  
-                 mensagem = "Não foi possivel excluir a cidade!";
+                 mensagem = "Não foi possivel pagar a conta!";
              }
             }
             out.println(mensagem);
@@ -52,11 +54,11 @@
             
             String id = request.getParameter("id");
             int codigo = Integer.valueOf(id);
-            cidade = CidadeDB.getCidade(codigo, conexao);
+            conta = ContaDB.getConta(codigo, conexao);
         %>
         
         <form class="col s12 indigo lighten-5" name="exclui" method="post">
-          Excluir Cidade ?
+          Pagar a Conta ?
          
             <input type="hidden" name="codigo" value="<%= id %>"/>
 

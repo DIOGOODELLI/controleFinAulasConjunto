@@ -40,7 +40,7 @@
             Estado estado = null;
             Connection conexao = Conexao.getConexao();
             if(request.getParameter("btnAltera") != null){
-               String sigla = request.getParameter("est_sigla");
+               String sigla = request.getParameter("estado");
                String nome = request.getParameter("nome");
            
                estado = new Estado(sigla, nome);              
@@ -77,7 +77,7 @@
           </div> 
 
           <div class="row"> 
-            <input type="hidden" name="codigo" value="<%=id%>"/>
+            <input type="hidden" name="estado" value="<%=id%>"/>
             <button class="btn waves-effect waves-light" type="submit" name="btnAltera">Alterar
                 <i class="material-icons right">send</i>
             </button>

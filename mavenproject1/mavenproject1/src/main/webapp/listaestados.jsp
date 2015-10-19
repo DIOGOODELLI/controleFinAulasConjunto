@@ -30,14 +30,14 @@
         </ul>
         <nav class="blue darken-4">
             <div class="nav-wrapper">
-                <a href="#!" class="brand-logo grey-text text">Lista Cidades</a>
+                <a href="#!" class="brand-logo grey-text text">Lista Estados</a>
                 <ul class="right hide-on-med-and-down">
                     <!-- Dropdown Trigger -->
                     <li><a class="dropdown-button blue-text text-darken-2" href="#!" data-activates="dropdown1">Cadastros<i class="blue-text text-darken-2 mdi-navigation-arrow-drop-down right"></i></a></li>
                 </ul>
             </div>
         </nav>
-        <a href="inserircidade.jsp" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>        
+        <a href="inserirestado.jsp" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>        
         <a href="index.html" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">replay</i></a> 
         <%
         Connection conexao = Conexao.getConexao();
@@ -54,7 +54,7 @@
             out.println("<td>"+estado.getEst_sigla()+"</td>");
             out.println("<td>"+estado.getNome()+"</td>");
             out.println("<td>");
-            out.println("<a href=\"excluircidade.jsp?id="+estado.getEst_sigla()+"\">Excluir</a>");
+            out.println("<a href=\"excluirestado.jsp?id="+estado.getEst_sigla()+"\">Excluir</a>");
             out.println("<a href=\"alterarestado.jsp?id="+estado.getEst_sigla()+"\">Alterar</a>");             
             out.println("</td>");
         }

@@ -1,5 +1,5 @@
-<%@page import="modelo.Cidade"%>
-<%@page import="controle.CidadeDB"%>
+<%@page import="modelo.Conta"%>
+<%@page import="controle.ContaDB"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="controle.Conexao"%>
 <%@page import="java.sql.Connection"%>
@@ -30,34 +30,41 @@
         </ul>
         <nav class="blue darken-4">
             <div class="nav-wrapper">
-                <a href="#!" class="brand-logo grey-text text">Lista Cidades</a>
+                <a href="#!" class="brand-logo grey-text text">Lista Contas</a>
                 <ul class="right hide-on-med-and-down">
                     <!-- Dropdown Trigger -->
                     <li><a class="dropdown-button blue-text text-darken-2" href="#!" data-activates="dropdown1">Cadastros<i class="blue-text text-darken-2 mdi-navigation-arrow-drop-down right"></i></a></li>
                 </ul>
             </div>
         </nav>
-        <a href="inserircidade.jsp" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>        
+        <a href="inserirconta.jsp" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>        
         <a href="index.html" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">replay</i></a> 
         <%
         Connection conexao = Conexao.getConexao();
-        ArrayList lista = CidadeDB.getListaCidades(conexao);
+        ArrayList lista = ContaDB.getListaContas(conexao);
         out.println("<table>");
         out.println("<tr>");
-        out.println("<td><b>Código</b></td>");
-        out.println("<td><b>Nome</b></td>");
-        out.println("<td><b>Estado</b></td>");
+        out.println("<td><b>Conta</b></td>");
+        out.println("<td><b>Data</b></td>");
+        out.println("<td><b>Descrição</b></td>");
+        out.println("<td><b>Situacao</b></td>");
+        out.println("<td><b>Valor</b></td>");
+        out.println("<td><b>Pessoa</b></td>");
         out.println("<td><b>Opções</b></td>");
         out.println("</tr>");
         for(int i = 0; i < lista.size(); i++){
-            Cidade cidade = (Cidade)lista.get(i);
+            Conta conta = (Conta)lista.get(i);
             out.println("<tr>");
-            out.println("<td>"+cidade.getCid_codigo()+"</td>");
-            out.println("<td>"+cidade.getNome()+"</td>");
-            out.println("<td>"+cidade.getEst_sigla()+"</td>");
+            out.println("<td>"+conta.getCnt_numero()+"</td>");
+            out.println("<td>"+conta.getData()+"</td>");
+            out.println("<td>"+conta.getDescricao()+"</td>");
+            out.println("<td>"+conta.getSituacao()+"</td>");
+            out.println("<td>"+conta.getValor()+"</td>");
+            out.println("<td>"+conta.getPes_codigo()+"</td>");
+            
             out.println("<td>");
-            out.println("<a href=\"excluircidade.jsp?id="+cidade.getCid_codigo()+"\">Excluir</a>");
-            out.println("<a href=\"alterarcidade.jsp?id="+cidade.getCid_codigo()+"\">Alterar</a>");             
+            out.println("<a href=\"excluirconta.jsp?id="+conta.getCnt_numero()+"\">Excluir</a>");
+            out.println("<a href=\"alterarconta.jsp?id="+conta.getCnt_numero()+"\">Alterar</a>");             
             out.println("</td>");
         }
         out.println("</table>");

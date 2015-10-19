@@ -1,6 +1,7 @@
+<%@page import="modelo.Pessoa"%>
 <%@page import="controle.Conexao"%>
 <%@page import="java.sql.Connection"%>
-<%@page import="controle.EstadoDB"%>
+<%@page import="controle.PessoaDB"%>
 <%@page import="modelo.Estado"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -37,47 +38,61 @@
         
         <%
             String mensagem = "";
-            Estado estado = null;
+            Pessoa pessoa = null;
             Connection conexao = Conexao.getConexao();
             if(request.getParameter("btnAltera") != null){
-               String sigla = request.getParameter("est_sigla");
-               String nome = request.getParameter("nome");
-           
-               estado = new Estado(sigla, nome);              
-               boolean alterou = EstadoDB.alteraEstado(estado, conexao);
+                int codigo = Integer.valueOf(request.getParameter("codigo"));
+                String nome = request.getParameter("nome");
+                int idade = Integer.valueOf(request.getParameter("idade"));
+                String email = request.getParameter("email");
+                int cidade = Integer.valueOf(request.getParameter("cidade"));
+
+               pessoa =  new Pessoa(codigo, nome, idade, email, cidade);              
+               boolean alterou = PessoaDB.alteraPessoa(pessoa, conexao);
                if(alterou){
-                   mensagem = "Estado alterado com sucesso!";
+                   mensagem = "Pessoa alterada com sucesso!";
                }else{
-                   mensagem = "Não foi possível alterar o estado!";
+                   mensagem = "Não foi possível alterar a pessoa!";
                }
             }
             out.print(mensagem);
             
             String id = request.getParameter("id");
-
-            estado = EstadoDB.getEstado(id, conexao);
-
+            int codigo = Integer.valueOf(id);
+            pessoa = PessoaDB.getPessoa(codigo, conexao);
         %>
-        <a href="listaestados.jsp" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">replay</i></a> 
-        
-        <form class="col s12 indigo lighten-5" name="frmAlterar" method="post">
-          
+        <a href="listapessoa.jsp" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">replay</i></a> 
+                 
+         <form class="col s12 indigo lighten-5" name="fmrCidade" method="post">
+                     
+            <div class="row">
+              <div class="input-field col s6">
+                <input type="text" class="validate" name="nome" maxlength="100" size="80" value="<%=pessoa.getNome()%>">
+                <label>Nome</label>
+              </div>
+            </div> 
+            
+            <div class="row">    
+              <div class="input-field col s6">
+                  <input type="text" class="validate" name="idade" value="<%=pessoa.getIdade()%>">
+                <label>Idade</label>
+              </div>
+            </div>
           <div class="row">    
             <div class="input-field col s6">
-              <input type="text" class="validate" name="estado" maxlength="2" size="3" value="<%=estado.getEst_sigla()%>">
-              <label>Sigla</label>
+              <input type="text" class="validate" name="email" value="<%=pessoa.getEmail()%>">
+              <label>Email</label>
+            </div>
+          </div>
+          <div class="row">    
+            <div class="input-field col s6">
+                <input type="text" class="validate" name="cidade" value="<%=pessoa.getCid_codigo()%>">
+              <label>Cidade</label>
             </div>
           </div>
             
-            <div class="row">
-            <div class="input-field col s6">
-              <input type="text" class="validate" name="nome" maxlength="100" size="80" value="<%=estado.getNome()%>" >
-              <label>Nome</label>
-            </div>
-          </div> 
-
           <div class="row"> 
-            <input type="hidden" name="codigo" value="<%=id%>"/>
+            <input type="hidden" name="codigo" value="<%=id%>"/>  
             <button class="btn waves-effect waves-light" type="submit" name="btnAltera">Alterar
                 <i class="material-icons right">send</i>
             </button>

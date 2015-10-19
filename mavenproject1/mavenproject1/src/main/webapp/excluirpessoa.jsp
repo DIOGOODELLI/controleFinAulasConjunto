@@ -1,3 +1,5 @@
+<%@page import="controle.PessoaDB"%>
+<%@page import="modelo.Pessoa"%>
 <%@page import="controle.CidadeDB"%>
 <%@page import="modelo.Cidade"%>
 <%@page import="controle.Conexao"%>
@@ -7,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Excluir Cidade</title>
+        <title>Excluir Pessoas</title>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
         <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
@@ -25,26 +27,26 @@
         </ul>
         <nav class="blue darken-4">
             <div class="nav-wrapper">
-                <a href="#!" class="brand-logo grey-text text">Alterar Cidades</a>
+                <a href="#!" class="brand-logo grey-text text">Excluir Pessoas</a>
                 <ul class="right hide-on-med-and-down">
                     <!-- Dropdown Trigger -->
                     <li><a class="dropdown-button blue-text text-darken-2" href="#!" data-activates="dropdown1">Cadastros<i class="blue-text text-darken-2 mdi-navigation-arrow-drop-down right"></i></a></li>
                 </ul>
             </div>
         </nav>
-        <a href="listacidades.jsp" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">replay</i></a> 
+        <a href="listapessoa.jsp" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">replay</i></a> 
         <%
             String mensagem = "";
             Connection conexao = Conexao.getConexao();
-            Cidade cidade = null;
+            Pessoa pessoa = null;
             if(request.getParameter("btnexclui") !=null){
              int codigo = Integer.valueOf(request.getParameter("codigo"));             
-             boolean excluiu = CidadeDB.excluiCidade(codigo, conexao);
+             boolean excluiu = PessoaDB.excluiPessoa(codigo, conexao);
              if(excluiu){
-                 mensagem = "Cidade excluida com sucelsso!";
+                 mensagem = "Pessoa excluida com sucelsso!";
              }else{
                  
-                 mensagem = "Não foi possivel excluir a cidade!";
+                 mensagem = "Não foi possivel excluir a pessoa!";
              }
             }
             out.println(mensagem);
@@ -52,14 +54,11 @@
             
             String id = request.getParameter("id");
             int codigo = Integer.valueOf(id);
-            cidade = CidadeDB.getCidade(codigo, conexao);
+            pessoa = PessoaDB.getPessoa(codigo, conexao);
         %>
         
         <form class="col s12 indigo lighten-5" name="exclui" method="post">
-          Excluir Cidade ?
-         
-            <input type="hidden" name="codigo" value="<%= id %>"/>
-
+          Excluir Pessoa ?
           <div class="row"> 
             <input type="hidden" name="codigo" value="<%=id%>"/>
             <button class="btn waves-effect waves-light" type="submit" name="btnexclui">Excluir

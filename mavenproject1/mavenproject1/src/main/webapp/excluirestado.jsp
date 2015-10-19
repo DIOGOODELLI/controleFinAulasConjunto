@@ -1,3 +1,5 @@
+<%@page import="controle.EstadoDB"%>
+<%@page import="modelo.Estado"%>
 <%@page import="controle.CidadeDB"%>
 <%@page import="modelo.Cidade"%>
 <%@page import="controle.Conexao"%>
@@ -32,36 +34,31 @@
                 </ul>
             </div>
         </nav>
-        <a href="listacidades.jsp" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">replay</i></a> 
+        <a href="listaestados.jsp" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">replay</i></a> 
         <%
             String mensagem = "";
             Connection conexao = Conexao.getConexao();
-            Cidade cidade = null;
+            
             if(request.getParameter("btnexclui") !=null){
-             int codigo = Integer.valueOf(request.getParameter("codigo"));             
-             boolean excluiu = CidadeDB.excluiCidade(codigo, conexao);
+              String sigla = request.getParameter("estado");             
+             boolean excluiu = EstadoDB.excluiEstado(sigla, conexao);
              if(excluiu){
-                 mensagem = "Cidade excluida com sucelsso!";
+                 mensagem = "Estado excluido com sucelsso!";
              }else{
                  
-                 mensagem = "Não foi possivel excluir a cidade!";
+                 mensagem = "Não foi possivel excluir o estado!";
              }
             }
             out.println(mensagem);
             out.println("<br/>");
             
             String id = request.getParameter("id");
-            int codigo = Integer.valueOf(id);
-            cidade = CidadeDB.getCidade(codigo, conexao);
         %>
         
         <form class="col s12 indigo lighten-5" name="exclui" method="post">
-          Excluir Cidade ?
-         
-            <input type="hidden" name="codigo" value="<%= id %>"/>
-
+          Excluir Estado ?
           <div class="row"> 
-            <input type="hidden" name="codigo" value="<%=id%>"/>
+            <input type="hidden" name="estado" value="<%=id%>"/>
             <button class="btn waves-effect waves-light" type="submit" name="btnexclui">Excluir
                 <i class="material-icons right">send</i>
             </button>

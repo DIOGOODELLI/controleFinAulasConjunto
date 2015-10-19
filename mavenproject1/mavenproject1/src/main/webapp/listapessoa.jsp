@@ -1,5 +1,6 @@
-<%@page import="modelo.Cidade"%>
-<%@page import="controle.CidadeDB"%>
+<%@page import="controle.PessoaDB"%>
+<%@page import="modelo.Pessoa"%>
+<%@page import="controle.PessoaDB"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="controle.Conexao"%>
 <%@page import="java.sql.Connection"%>
@@ -10,7 +11,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
-        <title>Lista Contas</title>
+        <title>Lista Pessoa</title>
 
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
@@ -30,34 +31,36 @@
         </ul>
         <nav class="blue darken-4">
             <div class="nav-wrapper">
-                <a href="#!" class="brand-logo grey-text text">Lista Cidades</a>
+                <a href="#!" class="brand-logo grey-text text">Lista Pessoas</a>
                 <ul class="right hide-on-med-and-down">
                     <!-- Dropdown Trigger -->
                     <li><a class="dropdown-button blue-text text-darken-2" href="#!" data-activates="dropdown1">Cadastros<i class="blue-text text-darken-2 mdi-navigation-arrow-drop-down right"></i></a></li>
                 </ul>
             </div>
         </nav>
-        <a href="inserircidade.jsp" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>        
+        <a href="inserirpessoa.jsp" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>        
         <a href="index.html" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">replay</i></a> 
         <%
         Connection conexao = Conexao.getConexao();
-        ArrayList lista = CidadeDB.getListaCidades(conexao);
+        ArrayList lista = PessoaDB.getListaPessoa(conexao);
         out.println("<table>");
         out.println("<tr>");
         out.println("<td><b>Código</b></td>");
         out.println("<td><b>Nome</b></td>");
-        out.println("<td><b>Estado</b></td>");
+        out.println("<td><b>Email</b></td>");
+        out.println("<td><b>Idade</b></td>");
         out.println("<td><b>Opções</b></td>");
         out.println("</tr>");
         for(int i = 0; i < lista.size(); i++){
-            Cidade cidade = (Cidade)lista.get(i);
+            Pessoa pessoa = (Pessoa)lista.get(i);
             out.println("<tr>");
-            out.println("<td>"+cidade.getCid_codigo()+"</td>");
-            out.println("<td>"+cidade.getNome()+"</td>");
-            out.println("<td>"+cidade.getEst_sigla()+"</td>");
+            out.println("<td>"+pessoa.getPes_codigo()+"</td>");
+            out.println("<td>"+pessoa.getNome()+"</td>");
+            out.println("<td>"+pessoa.getEmail()+"</td>"); 
+            out.println("<td>"+pessoa.getIdade()+"</td>"); 
             out.println("<td>");
-            out.println("<a href=\"excluircidade.jsp?id="+cidade.getCid_codigo()+"\">Excluir</a>");
-            out.println("<a href=\"alterarcidade.jsp?id="+cidade.getCid_codigo()+"\">Alterar</a>");             
+            out.println("<a href=\"excluirpessoa.jsp?id="+pessoa.getPes_codigo()+"\">Excluir</a>");
+            out.println("<a href=\"alterarpessoa.jsp?id="+pessoa.getPes_codigo()+"\">Alterar</a>");             
             out.println("</td>");
         }
         out.println("</table>");

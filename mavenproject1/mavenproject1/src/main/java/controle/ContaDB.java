@@ -73,13 +73,14 @@ public class ContaDB {
     public static boolean alteraConta(Conta conta, Connection conexao){
         boolean alterou = false;
         try{
-            PreparedStatement ps = conexao.prepareStatement("update conta set descricao = ? and data = ? and valor = ? and tipo = ? and situacao = ? and pes_codigo = ? where cnt_numero = ?");
+            PreparedStatement ps = conexao.prepareStatement("update conta set descricao = ?, data = ?, valor = ?, tipo = ?, situacao = ?, pes_codigo = ? where cnt_numero = ?");
             ps.setString(1, conta.getDescricao());
             ps.setString(2, conta.getData());
             ps.setDouble(3, conta.getValor());
             ps.setString(4, conta.getTipo());
             ps.setString(5, conta.getSituacao());
             ps.setInt(6, conta.getPes_codigo());
+            ps.setInt(7, conta.getCnt_numero());
             
             int valor = ps.executeUpdate();
             if(valor == 1){
@@ -94,11 +95,11 @@ public class ContaDB {
         }
     }
     
-    public static boolean excluiConta(String sigla, Connection conexao){
+    public static boolean excluiConta(int conta, Connection conexao){
         boolean excluiu = false;
         try{
             PreparedStatement ps = conexao.prepareStatement("delete from conta where cnt_numero = ?");
-            ps.setString(1, sigla);
+            ps.setInt(1, conta);
             int valor = ps.executeUpdate();
             if(valor == 1){
                 excluiu = true;
@@ -112,11 +113,11 @@ public class ContaDB {
         }
     }
     
-        public static Conta getConta(String sigla, Connection conexao){
+        public static Conta getConta(int contaCodigo, Connection conexao){
         Conta conta = null;
         try{
             PreparedStatement ps = conexao.prepareStatement("select * from conta where cnt_numero = ?");
-            ps.setString(1, sigla);
+            ps.setInt(1, contaCodigo);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 int auxConta = rs.getInt("cnt_numero");

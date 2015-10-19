@@ -22,7 +22,7 @@ public class PessoaDB {
         ArrayList lista = new ArrayList();
         try{
             Statement st = conexao.createStatement();
-            ResultSet rs = st.executeQuery("select * from pes_codigo");
+            ResultSet rs = st.executeQuery("select * from pessoa");
             while(rs.next()){
                 int pes_codigo = rs.getInt("pes_codigo");
                 String auxNome = rs.getString("nome");
@@ -64,14 +64,15 @@ public class PessoaDB {
         }
     }
     
-    public static boolean alteraEstado(Pessoa pessoa, Connection conexao){
+    public static boolean alteraPessoa(Pessoa pessoa, Connection conexao){
         boolean alterou = false;
         try{
-            PreparedStatement ps = conexao.prepareStatement("update pessoa set nome = ? and idade = ? and email = ? and cid_codigo = ? where pes_codigo = ?");
+            PreparedStatement ps = conexao.prepareStatement("update pessoa set nome = ?, idade = ?, email = ?, cid_codigo = ? where pes_codigo = ?");
             ps.setString(1, pessoa.getNome());
             ps.setInt(2, pessoa.getIdade());
             ps.setString(3, pessoa.getEmail());
             ps.setInt(4, pessoa.getCid_codigo());
+            ps.setInt(5, pessoa.getPes_codigo());
             int valor = ps.executeUpdate();
             if(valor == 1){
                 alterou = true;
